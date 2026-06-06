@@ -43,6 +43,7 @@ services:
       - MYSQL_PASSWORD=ragflow
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./db/multi-tenant-init.sql:/docker-entrypoint-initdb.d/01-multi-tenant.sql:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s

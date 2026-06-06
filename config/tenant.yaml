@@ -1,0 +1,47 @@
+# 多租户 SaaS 架构配置
+
+## 租户隔离策略
+isolation_mode: schema  # schema-level isolation per tenant
+
+## 默认租户
+default_tenant:
+  id: "default"
+  name: "默认租户"
+  schema: "tenant_default"
+  max_users: 100
+  max_datasets: 50
+  storage_quota_mb: 5120
+
+## 租户数据库配置
+database:
+  type: mysql
+  host: mysql
+  port: 3306
+  root_user: root
+  root_password_env: MYSQL_ROOT_PASSWORD
+  # 每个租户使用独立的 schema 实现数据隔离
+  schema_prefix: "tenant_"
+
+## Redis 隔离
+redis:
+  db_prefix: "chatpilot:"  # key prefix for tenant isolation
+  # tenant data stored under chatpilot:{tenant_id}:*
+
+## Elasticsearch 隔离
+elasticsearch:
+  index_prefix: "chatpilot_"  # index prefix per tenant
+  # indices: chatpilot_{tenant_id}_kb, chatpilot_{tenant_id}_chat_history
+
+## MinIO 隔离
+minio:
+  bucket_prefix: "chatpilot-"  # bucket prefix per tenant
+  # buckets: chatpilot-{tenant_id}-docs, chatpilot-{tenant_id}-cache
+
+## 租户管理 API
+management_api:
+  port: 8080
+  base_path: /api/v1/tenants
+  auth:
+    admin_token_env: TENANT_ADMIN_TOKEN
+  rate_limit:
+    requests_per_minute: 60

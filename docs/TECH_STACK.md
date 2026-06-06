@@ -20,3 +20,13 @@
 - 支持格式: PDF, Word, Excel, TXT, Markdown
 - 解析引擎: RAGFlow Document Parser
 - 分块策略: 语义分块
+
+## 多租户 SaaS
+- 隔离模式: Schema 级别（MySQL 独立 schema）
+- 租户管理: tenant_management 数据库
+- 数据隔离:
+  - MySQL: tenant_<id> schema
+  - Elasticsearch: chatpilot_<id>_ 索引前缀
+  - Redis: chatpilot:<id>: key 前缀
+  - MinIO: chatpilot-<id>- bucket 前缀
+- 租户初始化: db/multi-tenant-init.sql + scripts/setup-tenant.sh

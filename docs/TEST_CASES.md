@@ -21,3 +21,11 @@
 | Case-ID | 描述 | 执行命令 | 预期结果 |
 |---------|------|----------|----------|
 | TC-005 | 部署验证脚本 | `bash scripts/verify-deployment.sh` | 全部检查通过 |
+
+### AC-6: 多租户 SaaS 架构基础版
+
+| Case-ID | 描述 | 执行命令 | 预期结果 |
+|---------|------|----------|----------|
+| TC-006 | 租户配置文件存在 | `cat config/tenant.yaml` | 配置有效，含隔离策略 |
+| TC-007 | 租户初始化 SQL | `cat db/multi-tenant-init.sql` | SQL 语法正确，含 tenants 表和默认租户 |
+| TC-008 | 租户设置脚本 | `bash -n scripts/setup-tenant.sh` | 语法正确 |
