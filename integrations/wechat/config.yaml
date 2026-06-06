@@ -1,0 +1,17 @@
+# WeChat Official Account Integration
+name: wechat
+type: official_account
+enabled: true
+config:
+  app_id: YOUR_APP_ID
+  app_secret: YOUR_APP_SECRET
+  token: YOUR_TOKEN
+  encoding_aes_key: YOUR_AES_KEY
+webhook:
+  url: /api/wechat/callback
+  method: POST
+  verify_signature: true
+message:
+  max_content_length: 2048
+  default_reply: "正在思考中，请稍候..."
+  rag_dataset_id: default
